@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Digits Without 6</title>
+<style>
+body{
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  font-family:'Century Gothic', Arial, sans-serif;
+}
+.slide{
+  width:2000px;
+  height:1100px;
+  position:relative;
+  border:1px solid #ccc;
+  overflow:hidden;
+}
+.num{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:600px;
+  font-weight:bold;
+  text-shadow:4px 6px 6px rgba(0,0,0,0.25);
+  transition:all 1.5s ease-in-out;
+}
+button{
+  font-size:28px;
+  padding:16px 32px;
+  margin:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="slide" id="slide"></div>
+<div>
+<button onclick="start()">Start</button>
+<button onclick="pause()">Pause</button>
+</div>
+
+<script>
+const slide=document.getElementById("slide");
+
+let timer=null, running=false;
+
+// digits excluding 6
+const digits=["0","1","2","3","4","5","7","8","9"];
+
+const el=document.createElement("div");
+el.className="num";
+slide.appendChild(el);
+
+function randomBackground(){
+ const colors=["#ffffff","#f2f2f2","#e8f0fe","#fff3cd","#e6ffe6","#fce4ec","#e0f7fa"];
+ slide.style.background=colors[Math.floor(Math.random()*colors.length)];
+}
+
+function next(){
+ if(!running) return;
+
+ const d = digits[Math.floor(Math.random()*digits.length)];
+ el.innerText = d;
+
+ randomBackground();
+
+ timer=setTimeout(next,2000);
+}
+
+function start(){
+ if(running) return;
+ running=true;
+ next();
+}
+
+function pause(){
+ running=false;
+ clearTimeout(timer);
+}
+</script>
+
+</body>
+</html>
